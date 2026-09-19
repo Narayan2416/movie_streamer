@@ -9,7 +9,7 @@ db = client["movie_streamer"]
 collection = db["movies"]
 
 def getMovies():
-    return list(collection.find({}, {"id": 1,"movie_title": 1}))
+    return list(collection.find({}, {"id": 1,"movie_title": 1,"_id": 0}))
 
 def getMovieById(movie_id):
-    return collection.find_one({"id": movie_id})
+    return collection.find_one({"id": movie_id},{"_id": 0})

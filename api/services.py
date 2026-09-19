@@ -1,10 +1,10 @@
 from flask import Flask, Response, request,Blueprint
-from db.moviesDb import getMovieById
+from db.moviesDb import getMovieById,getMovies
 import os
 
 bp=Blueprint("apis",__name__)
 
-@bp.route("/video/<int:id>")
+@bp.route("/api/movies/play/<int:id>")
 def video(id):
     VIDEO_PATH = getMovieById(id).get("movie_path")
     #print(VIDEO_PATH,"has path?")
@@ -74,3 +74,8 @@ def video(id):
             )
         }
     )
+
+@bp.route("/api/movies", methods=["GET"])
+def getMoviesAPI():
+    movies = getMovies()
+    return {"movies": movies}, 200
