@@ -6,8 +6,11 @@ bp=Blueprint("apis",__name__)
 
 @bp.route("/api/movies/play/<int:id>")
 def video(id):
-    VIDEO_PATH = getMovieById(id).get("movie_path")
-    print(VIDEO_PATH,"has path?")
+    movie = getMovieById(id)
+    VIDEO_PATH = movie.get("movie_path")
+    mime_type = movie.get("mime_type")
+
+    #print(VIDEO_PATH,"has path?")
 
     if not os.path.exists(VIDEO_PATH):
         return "Video not found", 404
@@ -25,7 +28,7 @@ def video(id):
         return Response(
             generate(),
             status=200,
-            mimetype="video/x-matroska",
+            mimetype="video/"+mime_type,
             headers={
                 "Content-Length": str(file_size),
                 "Accept-Ranges": "bytes"
@@ -66,7 +69,7 @@ def video(id):
     return Response(
         generate(),
         status=206,
-        mimetype="video/x-matroska",
+        mimetype="video/"+mime_type,
         headers={
             "Content-Range": f"bytes {start}-{end}/{file_size}",
             "Accept-Ranges": "bytes",
@@ -79,3 +82,10 @@ def video(id):
 def getMoviesAPI():
     movies = getMovies()
     return {"movies": movies}, 200
+
+@bp.route("/api/movies/<int:id>/type", methods=["GET"])
+def getMovieType(id):
+    movie = getMovieById(id)
+    if movie:
+        return {"type": movie.get("mime_type")}, 200
+    return {"error": "Movie not found"}, 404

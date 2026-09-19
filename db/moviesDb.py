@@ -13,3 +13,6 @@ def getMovies():
 
 def getMovieById(movie_id):
     return collection.find_one({"id": movie_id},{"_id": 0})
+
+
+#print(getMovieById(3).get("mime_type"))
