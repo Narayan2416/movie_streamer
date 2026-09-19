@@ -14,6 +14,9 @@ def index():
     print(movies,"it has somrthing?")
     return render_template("home.html", movies=movies)
 
+@app.route("/movie/<int:id>")
+def viewMovie(id):
+    return render_template("index.html",id=id)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000,debug=True)

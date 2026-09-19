@@ -9,7 +9,7 @@
     {% for movie in movies %}
         <div>
             <h2>{{ movie.movie_title }}</h2>
-            <a href="{{ url_for('apis.video', id=movie.id) }}">Watch</a>
+            <a href="{{ url_for('viewMovie', id=movie.id) }}">Watch</a>
         </div>
     {% endfor %}
 </body>
