@@ -6,7 +6,8 @@ bp=Blueprint("apis",__name__)
 
 @bp.route("/video/<int:id>")
 def video(id):
-    VIDEO_PATH = getMovieById(id).get("path")
+    VIDEO_PATH = getMovieById(id).get("movie_path")
+    print(VIDEO_PATH,"has path?")
 
     if not os.path.exists(VIDEO_PATH):
         return "Video not found", 404
