@@ -1,11 +1,15 @@
 from flask import Flask
 from flask_cors import CORS
 from api.services import bp as service_bp
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app,origins=os.getenv("frontend_url"))
+frontend_urls = os.getenv("frontend_url", "").split(",")
+
+CORS(app, origins=frontend_urls)
 
 
 app.register_blueprint(service_bp)
